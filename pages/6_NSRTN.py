@@ -113,7 +113,7 @@ NSRTN_gaps  =  pd.read_excel(file_path2122)
 
 # NSRTN action tracker
 file_path2032 = "Data/nsrtn/rrhnsrtn_gapsDetail.xls"
-NSRTN_action  =  pd.read_excel(file_path20)
+NSRTN_action  =  pd.read_excel(file_path2032)
 
 
 
