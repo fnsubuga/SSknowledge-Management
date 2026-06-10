@@ -18,7 +18,6 @@ from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode
 # -----------------------------------------------------
 st.set_page_config(
     page_title="Test_Menu",
-    page_icon="D:/CPHL-MOH/pics/MoH_logo.png",
     layout="wide"
 )
 
