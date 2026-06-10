@@ -1,0 +1,9 @@
+streamlit
+pandas
+numpy
+seaborn
+plotly
+matplotlib
+altair
+streamlit-aggrid
+openpyxl
