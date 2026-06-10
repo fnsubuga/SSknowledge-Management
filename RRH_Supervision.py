@@ -66,15 +66,15 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # %% Load data 
 
 # Total sites visited
-file_path = "Data/TotalSites_Visited.xls"
+file_path = "Data/visit/TotalSites_Visited.xls"
 TlVisit  =  pd.read_excel(file_path)
 
 # Total sites visited, and by RRH
-file_path1 = "Data/rrh_TotalSites_Visited.xls"
+file_path1 = "Data/visit/rrh_TotalSites_Visited.xls"
 visits  = pd.read_excel(file_path1)
 
 # Line list of visited facilities
-file_path3 = "Data/Linelist_sitesVisited.xls"
+file_path3 = "Data/visit/Linelist_sitesVisited.xls"
 Fac_linelist  = pd.read_excel(file_path3)
 
 # KPI summary table
