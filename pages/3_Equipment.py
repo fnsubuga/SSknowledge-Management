@@ -80,20 +80,20 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 
 # Health Facilties reached in support supervision
 
-file_path3 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/Equipt/rrh_equip_KPI.xls"
+file_path3 = "Data/Equipt/rrh_equip_KPI.xls"
 Fac_linelist  = pd.read_excel(file_path3)
 
 # Detailed equipment table
-file_path11  = "D:/CPHL-MOH/Support Supervision/2026/May 2025/Equipt/equip_detail.xls"
+file_path11  = "Data/Equipt/equip_detail.xls"
 equip_detail =  pd.read_excel(file_path11)
 
 # gaps RRH
-file_path112  = "D:/CPHL-MOH/Support Supervision/2026/May 2025/Equipt/rrhequip_gaps.xls"
+file_path112  = "Data/Equipt/rrhequip_gaps.xls"
 equip_gaps =  pd.read_excel(file_path112)
 
 
 # Detailed gaps
-file_path113  = "D:/CPHL-MOH/Support Supervision/2026/May 2025/Equipt/rrhequip_gapsdetails.xls"
+file_path113  = "Data/Equipt/rrhequip_gapsdetails.xls"
 equip_gapsDetail =  pd.read_excel(file_path113)
 
 # %% Common filter

@@ -56,15 +56,15 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # %% Load the data frames
 
 # Test menu KPI status by RRH region
-file_path2 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/testmenu/test_menu_implementationRRH.xls"
+file_path2 = "Data/TestMenu/test_menu_implementationRRH.xls"
 RRHTestMenu = pd.read_excel(file_path2)
 
 # gaps
-file_path212 = "D:/Python/dashboard/dashboard/SupportSupervisionRpt/Data/Jan_March/TestMenu/rrhtest_menu_gaps.xls"
+file_path212 = "Data/TestMenu/rrhtest_menu_gaps.xls"
 TestMenugaps = pd.read_excel(file_path212)
 
 # action points
-file_path232 = "D:/Python/dashboard/dashboard/SupportSupervisionRpt/Data/Jan_March/TestMenu/rrhtest_menu_gapDetail.xls"
+file_path232 = "Data/TestMenu/rrhtest_menu_gapDetail.xls"
 TestMenuactions = pd.read_excel(file_path232)
 
 
