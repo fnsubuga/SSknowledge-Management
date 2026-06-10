@@ -19,7 +19,6 @@ from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode
 # -----------------------------------------------------
 st.set_page_config(
     page_title="ICT",
-    page_icon="D:/CPHL-MOH/pics/MoH_logo.png",
     layout="wide"
 )
 
@@ -87,19 +86,19 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # %% Load the data frames
 
 # ICT RRH KPIs
-file_path30 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/ict/rrh_all_ict_kpi_status.xls"
+file_path30 = "Data/ict/rrh_all_ict_kpi_status.xls"
 ictkpis  =  pd.read_excel(file_path30)
 
 # ICT Health Facility Detail
-file_path31 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/ict/ict_detail.xls"
+file_path31 = "Data/ict/ict_detail.xls"
 ictDetails  =  pd.read_excel(file_path31)
 
 # ICT gaps
-file_path3023 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/ict/rrhict_gaps.xls"
+file_path3023 = "Data/ict/rrhict_gaps.xls"
 ictgaps  =  pd.read_excel(file_path3023)
 
 # ICT action tracker
-file_path3143 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/ict/rrhict_gapsDetail.xls"
+file_path3143 = "Data/ict/rrhict_gapsDetail.xls"
 ictactiontracker  =  pd.read_excel(file_path3143)
 
 
