@@ -87,25 +87,25 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # %% Load the data frames
 
 # BSBS RRH KPIs
-file_path16 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/BSBS/rrh_bsbs_KPI_Summary.xls"
+file_path16 = "Data/BSBS/rrh_bsbs_KPI_Summary.xls"
 bsbsKPI  =  pd.read_excel(file_path16)
 
 # BSBS best practices not implemented
-file_path16 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/BSBS/rrh_bstpractices_not_Implemented.xls"
+file_path16 = "Data/BSBS/rrh_bstpractices_not_Implemented.xls"
 bsbs_prac  =  pd.read_excel(file_path16)
 
 
 # BSBS Health Facility Detail
-file_path17 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/BSBS/hFac_bsbs_details.xls"
+file_path17 = "Data/BSBS/hFac_bsbs_details.xls"
 bsbsHfac  =  pd.read_excel(file_path17)
 
 # BSBS gaps
-file_path1622 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/BSBS/rrh_bsbs_gaps.xls"
+file_path1622 = "Data/BSBS/rrh_bsbs_gaps.xls"
 bsbs_gaps  =  pd.read_excel(file_path1622)
 
 
 # BSBS action tracker
-file_path1721 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/BSBS/rrh_bsbs_gapsDetail.xls"
+file_path1721 = "Data/BSBS/rrh_bsbs_gapsDetail.xls"
 bsbs_actintracker  =  pd.read_excel(file_path1721)
 
 
