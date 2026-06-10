@@ -22,7 +22,6 @@ import pprint
 # -----------------------------------------------------
 st.set_page_config(
     page_title="Equipment",
-    page_icon="D:/CPHL-MOH/pics/MoH_logo.png",
     layout="wide"
 )
 
