@@ -98,27 +98,27 @@ def col_rag2(val):
 # %% Load the data frames
 
 # HR KPI status by RRH region
-file_path2 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/HR/HR_KPIs.xls"
+file_path2 = "Data/HR/HR_KPIs.xlsx"
 HRLevel = pd.read_excel(file_path2)
 
 # HR not available by RRH by level
-file_path3  =  "D:/CPHL-MOH/Support Supervision/2026/May 2025/HR/Prop_cadres_unavailable_RRH_lvl.xls"
+file_path3 = "Data/HR/Prop_cadres_unavailable_RRH_lvl.xlsx"
 HRRgns  =  pd.read_excel(file_path3)
 
 # Cadres unavailable by health level
-file_path4  =  "D:/CPHL-MOH/Support Supervision/2026/May 2025/HR/Prop_cadres_unavailable_lvl.xls"
+file_path4 = "Data/HR/Prop_cadres_unavailable_lvl.xlsx"
 CadreAvail  =  pd.read_excel(file_path4)
 
 # HR detailed table
-file_path6  =  "D:/CPHL-MOH/Support Supervision/2026/May 2025/HR/Detailed_HR.xls"
+file_path6 = "Data/HR/Detailed_HR.xlsx"
 HRDetail  =  pd.read_excel(file_path6)
 
 # Gaps
-file_path411  =  "D:/CPHL-MOH/Support Supervision/2026/May 2025/HR/rrh_Gaps_HR.xls"
+file_path411 = "Data/HR/rrh_Gaps_HR.xlsx"
 hrgaps  =  pd.read_excel(file_path411)
 
 # action tracker
-file_path611  =  "D:/CPHL-MOH/Support Supervision/2026/May 2025/HR/actionTracker_HR.xls"
+file_path611 = "Data/HR/actionTracker_HR.xlsx"
 HRactionTracker  =  pd.read_excel(file_path611)
 
 # %% Rename the columns - RRH to not crash with the RRH level naming
