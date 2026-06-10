@@ -100,19 +100,19 @@ def col_rag2(val):
 # %% Load the data frames
 
 # NSRTN KPIs
-file_path21 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/nsrtn/nsrtn_kpis_rrh.xls"
+file_path21 = "Data/nsrtn/nsrtn_kpis_rrh.xls"
 NSRTN_KPIs  =  pd.read_excel(file_path21)
 
 # NSRTN Details
-file_path20 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/nsrtn/health_facility_KPIs.xls"
+file_path20 = "Data/nsrtn/health_facility_KPIs.xls"
 NSRTN_Details  =  pd.read_excel(file_path20)
 
 # NSRTN gaps
-file_path2122 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/nsrtn/rrhnsrtn_gaps.xls"
+file_path2122 = "Data/nsrtn/rrhnsrtn_gaps.xls"
 NSRTN_gaps  =  pd.read_excel(file_path2122)
 
 # NSRTN action tracker
-file_path2032 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/nsrtn/rrhnsrtn_gapsDetail.xls"
+file_path2032 = "Data/nsrtn/rrhnsrtn_gapsDetail.xls"
 NSRTN_action  =  pd.read_excel(file_path20)
 
 
