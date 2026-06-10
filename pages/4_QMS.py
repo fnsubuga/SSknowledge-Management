@@ -19,7 +19,6 @@ from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode
 # -----------------------------------------------------
 st.set_page_config(
     page_title="QMS",
-    page_icon="D:/CPHL-MOH/pics/MoH_logo.png",
     layout="wide"
 )
 
@@ -89,23 +88,23 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # -----------------------------------------------------
 
 # RRH Summary of KPI indicators
-file_path13 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/QMS/rrh_QMS_status.xls"
+file_path13 = "Data/QMS/rrh_QMS_status.xls"
 qms = pd.read_excel(file_path13)
 
 # Tests without EQA Schemes by RRH
-file_path15 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/QMS/testNotonEQA_RRH.xls"
+file_path15 = "Data/QMS/testNotonEQA_RRH.xls"
 NotestEQArrh  =  pd.read_excel(file_path15)
 
 # QMS Detailed Table
-file_path14 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/QMS/QMS_details_RRH.xls"
+file_path14 = "Data/QMS/QMS_details_RRH.xls"
 QMSDetail = pd.read_excel(file_path14)
 
 # Gaps
-file_path1523 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/QMS/rrhQMS_gaps_RRH.xls"
+file_path1523 = "Data/QMS/rrhQMS_gaps_RRH.xls"
 QMSgaps  =  pd.read_excel(file_path1523)
 
 # QMS Detailed Table
-file_path1432 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/QMS/QMS_actiontracker_RRH.xls"
+file_path1432 = "Data/QMS/QMS_actiontracker_RRH.xls"
 QMSactiontracker = pd.read_excel(file_path1432)
 
 
