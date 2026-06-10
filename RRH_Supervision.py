@@ -12,12 +12,13 @@ import seaborn as sns
 import plotly.express as px
 from st_aggrid import AgGrid, GridOptionsBuilder
 
+
+
 # -----------------------------------------------------
 # Streamlit Page Config
 # -----------------------------------------------------
 st.set_page_config(
-    page_title="Support Supervision Report",
-    page_icon="D:/CPHL-MOH/pics/MoH_logo.png",
+    page_title="Support Supervision Details",
     layout="wide"
 )
 
@@ -65,15 +66,15 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # %% Load data 
 
 # Total sites visited
-file_path = "D:/CPHL-MOH/Support Supervision/2026/May 2025/SitesVisited/TotalSites_Visited.xls"
+file_path = "Data/TotalSites_Visited.xls"
 TlVisit  =  pd.read_excel(file_path)
 
 # Total sites visited, and by RRH
-file_path1 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/SitesVisited/rrh_TotalSites_Visited.xls"
+file_path1 = "Data/rrh_TotalSites_Visited.xls"
 visits  = pd.read_excel(file_path1)
 
 # Line list of visited facilities
-file_path3 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/SitesVisited/Linelist_sitesVisited.xls"
+file_path3 = "Data/Linelist_sitesVisited.xls"
 Fac_linelist  = pd.read_excel(file_path3)
 
 # KPI summary table
