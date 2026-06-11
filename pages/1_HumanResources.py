@@ -155,11 +155,11 @@ HRDetail  =  HRDetail[first_cols + remaining_cols]
 # Apply the filter for all table
 
 # Define Hub Name
-RRH_list = sorted(rrhHR_KPIs["RRH_Region"].dropna().unique().tolist())
+RRH_list = sorted(HRLevel["RRH_Region"].dropna().unique().tolist())
 
-Yr_list  = sorted(rrhHR_KPIs["Yr"].dropna().unique().tolist())
+Yr_list  = sorted(HRLevel["Yr"].dropna().unique().tolist())
 
-Qtr_list  = sorted(rrhHR_KPIs["Qtr"].dropna().unique().tolist())
+Qtr_list  = sorted(HRLevel["Qtr"].dropna().unique().tolist())
 
 with st.sidebar:
     st.header("Filters", divider=True)
