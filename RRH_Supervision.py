@@ -105,6 +105,17 @@ if not file_path32323.exists():
     )
 allKPIs  = pd.read_excel(file_path32323)
 
+# Gaps
+file_path2435 = Path("Data") / "HR" / "aps_HR.xlsx"
+# Fallback to local path when running in Spyder
+if not file_path2435.exists():
+    file_path2435 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\aps_HR.xlsx"
+    )
+
+NatHR_Gaps = pd.read_excel(file_path2435)
+
+
 # KPI summary table
 #file_path4 = "Data/visit/Jan_March/KPI_Summary.xls"
 #KPIs  = pd.read_excel(file_path4)
@@ -459,5 +470,98 @@ st.download_button(
     file_name='all_kpis.csv',
     mime='text/csv'
 )
+
+# %% Overall HR challenges
+
+gap_cols = [
+    "Understaffing",
+    "Training gaps",
+    "Not all Staff required deployed",
+    "Inadequate HR funding",
+    "Inadequate/No Support Staff",
+    "Staff turnover",
+    "No promotions",
+    "Staff not reporting to upcountry sites"
+]
+
+df_plot = NatHR_Gaps.copy()
+
+# create quarterly order
+qtr_order = {
+    "Jan-Mar": 1,
+    "Apri-Jun": 2,
+    "Apri-Jun": 2,
+    "Jul-Sept": 3,
+    "Oct-Dec": 4
+}
+
+df_plot["Qtr_Order"] = df_plot["Qtr"].map(qtr_order)
+
+df_plot["Sort_Order"] = (
+    df_plot["Yr"] * 10 +
+    df_plot["Qtr_Order"]
+)
+
+df_plot["Period"] = (
+    df_plot["Qtr"] + " " +
+    df_plot["Yr"].astype(str)
+)
+
+df_plot = df_plot.sort_values("Sort_Order")
+
+# extract percentages
+for col in gap_cols:
+    df_plot[col] = (
+        df_plot[col]
+        .astype(str)
+        .str.extract(r'([\d\.]+)', expand=False)
+        .astype(float)
+    )
+    
+heatmap_df = (
+    df_plot
+    .set_index("Period")[gap_cols]
+    .T
+)
+
+# draw the heatmap
+fig = px.imshow(
+    heatmap_df,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="Reds",
+    labels=dict(
+        x="Quarter",
+        y="HR Gap",
+        color="% of Sites"
+    ),
+    title="Common HR Gaps by Quarter"
+)
+
+fig.update_layout(
+    height=500
+)
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+# improving scale color
+fig = px.imshow(
+    heatmap_df,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="RdYlGn_r",
+    labels=dict(
+        x="Quarter",
+        y="HR Gap",
+        color="% of Sites"
+    ),
+    title="Common HR Gaps by Quarter"
+)
+
+
+
 
 
