@@ -114,7 +114,7 @@ file_path40 = "Data/radiology/rrh_radgy_kpis.xls"
 radgy  =  pd.read_excel(file_path40)
 
 # Microbiology Details
-file_path41 = "Data/radiology/radgy_QA.xls"
+file_path41 = "Data/radiology/radgy_QAs.xls"
 radgy_Details  =  pd.read_excel(file_path41)
 
 
