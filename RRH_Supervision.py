@@ -126,6 +126,81 @@ if not file_path23222.exists():
 
 TestMenuallgaps = pd.read_excel(file_path23222)
 
+# equipment gaps
+file_path1133 = Path("Data") / "Equipt" / "equip_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path1133.exists():
+    file_path1133 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\Equipt\equip_gaps.xls"
+    )
+equipgaps =  pd.read_excel(file_path1133)
+
+
+# QMS gaps
+file_path14321 = Path("Data") / "QMS" / "QMS_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path14321.exists():
+    file_path14321 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\QMS\QMS_gaps.xls"
+    )
+QMSgaps = pd.read_excel(file_path14321)
+
+# BSBSgaps
+file_path17211 = Path("Data") / "BSBS" / "bsbs_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path17211.exists():
+    file_path17211 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\BSBS\bsbs_gaps.xls"
+    )
+bsbsgaps  =  pd.read_excel(file_path17211)
+
+# NSRTN gaps
+file_path20321 = Path("Data") / "nsrtn" / "nsrtn_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path20321.exists():
+    file_path20321 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\nsrtn\nsrtn_gaps.xls"
+    )
+
+NSRTNgaps  =  pd.read_excel(file_path20321)
+
+
+# ICT gaps
+file_path31431 = Path("Data") / "ict" / "ict_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path31431.exists():
+    file_path31431 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\ict\ict_gaps.xls"
+    )
+ictgaps  =  pd.read_excel(file_path31431)
+
+
+# Microbiology gaps
+file_path413233 = Path("Data") / "mb" / "MB_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path413233.exists():
+    file_path413233 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\mb\MB_gaps.xls"
+    )
+
+MBgaps  =  pd.read_excel(file_path413233)
+
+# radiology gaps
+file_path4157 = Path("Data") / "radiology" / "rrhradgy_gapsdetail.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path4157.exists():
+    file_path4157 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\radiology\rrhradgy_gapsdetail.xls"
+    )
+
+radgygaps  =  pd.read_excel(file_path4157)
 
 # KPI summary table
 #file_path4 = "Data/visit/Jan_March/KPI_Summary.xls"
@@ -709,5 +784,713 @@ fig = px.imshow(
 )
 
 
+# %% Overall equipment gaps
+gap_cols2 = [
+    "Equiptent donwtime, Non-functional, faulty equipment",
+    "Untimely equipment servicing, maintenance", 
+    "Missinig essential equipt./inadequate number, or Capacity",
+    "No power backup, or power fluctuations",
+    "Commodity unavailbility & expiries causing equipt downtime",
+    "Unused equipment due to failed setup/installation",
+    "No, outdated routine maintenance logs", 
+    "No air-conditioning in lab",
+    "Delayed placement on request", 
+    "Equipment without Service Contracts",
+    "Non, untimely equipment calibration", "Old equipment still in use",
+    "Supply of substandard commodities", "Inadequate budget",
+    "Long breakdown response TAT (Workshop and Service Provider)",
+    "staff with technical capacity"
+]
 
+df_plot2 = equipgaps.copy()
+
+# create quarterly order
+qtr_order = {
+    "Jan-Mar": 1,
+    "Apri-Jun": 2,
+    "Apri-Jun": 2,
+    "Jul-Sept": 3,
+    "Oct-Dec": 4
+}
+
+df_plot2["Qtr_Order"] = df_plot2["Qtr"].map(qtr_order)
+
+df_plot2["Sort_Order"] = (
+    df_plot2["Yr"] * 10 +
+    df_plot2["Qtr_Order"]
+)
+
+df_plot2["Period"] = (
+    df_plot2["Qtr"] + " " +
+    df_plot2["Yr"].astype(str)
+)
+
+df_plot2 = df_plot2.sort_values("Sort_Order")
+
+# extract percentages
+for col in gap_cols2:
+    df_plot2[col] = (
+        df_plot2[col]
+        .astype(str)
+        .str.extract(r'([\d\.]+)', expand=False)
+        .astype(float)
+    )
+    
+heatmap_df2 = (
+    df_plot2
+    .set_index("Period")[gap_cols2]
+    .T
+)
+
+# draw the heatmap
+fig = px.imshow(
+    heatmap_df2,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="Reds",
+    labels=dict(
+        x="Quarter",
+        y="Equipment functionality Gaps",
+        color="% of Sites"
+    ),
+    title="Common Equipment functionality Gaps by Quarter"
+)
+
+fig.update_layout(
+    height=max(350, len(heatmap_df1.index) * 28),
+    font=dict(size=10),
+    margin=dict(
+        l=10,
+        r=10,
+        t=40,
+        b=10
+    )
+)
+
+fig.update_traces(
+    textfont_size=10
+)
+
+
+fig.update_xaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=11)
+)
+
+fig.update_yaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=9)
+)
+
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+# improving scale color
+fig = px.imshow(
+    heatmap_df2,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="RdYlGn_r",
+    labels=dict(
+        x="Quarter",
+        y="Equipment functionality Gaps",
+        color="% of Sites"
+    ),
+    title="Common Equipment functionality Gaps by Quarter"
+)
+
+
+
+# %% Overall QMS gaps
+gap_cols3 = [
+    "Irregular participation, and tests not enrolled onto EQA",
+    "HR not trained,assessed, and/or mentored in EQA", 
+    "Workload, Understaffing, poor attitude - causing no EQA response, and QMS implementation challenges",
+    "No EQA results review, rootcause,corrective action,CQI projects done for EQA, and QMS",
+    "eafya LIMS has missing ISO requirements", "No SOPs"
+]
+
+df_plot3 = QMSgaps.copy()
+
+# create quarterly order
+qtr_order = {
+    "Jan-Mar": 1,
+    "Apri-Jun": 2,
+    "Apri-Jun": 2,
+    "Jul-Sept": 3,
+    "Oct-Dec": 4
+}
+
+df_plot3["Qtr_Order"] = df_plot3["Qtr"].map(qtr_order)
+
+df_plot3["Sort_Order"] = (
+    df_plot3["Yr"] * 10 +
+    df_plot3["Qtr_Order"]
+)
+
+df_plot3["Period"] = (
+    df_plot3["Qtr"] + " " +
+    df_plot3["Yr"].astype(str)
+)
+
+df_plot3 = df_plot3.sort_values("Sort_Order")
+
+# extract percentages
+for col in gap_cols3:
+    df_plot3[col] = (
+        df_plot3[col]
+        .astype(str)
+        .str.extract(r'([\d\.]+)', expand=False)
+        .astype(float)
+    )
+    
+heatmap_df3 = (
+    df_plot3
+    .set_index("Period")[gap_cols3]
+    .T
+)
+
+# draw the heatmap
+fig = px.imshow(
+    heatmap_df3,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="Reds",
+    labels=dict(
+        x="Quarter",
+        y="QMS Gaps",
+        color="% of Sites"
+    ),
+    title="Common QMS Gaps by Quarter"
+)
+
+fig.update_layout(
+    height=max(350, len(heatmap_df1.index) * 28),
+    font=dict(size=10),
+    margin=dict(
+        l=10,
+        r=10,
+        t=40,
+        b=10
+    )
+)
+
+fig.update_traces(
+    textfont_size=10
+)
+
+
+fig.update_xaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=11)
+)
+
+fig.update_yaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=9)
+)
+
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+# improving scale color
+fig = px.imshow(
+    heatmap_df3,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="RdYlGn_r",
+    labels=dict(
+        x="Quarter",
+        y="Equipment functionality Gaps",
+        color="% of Sites"
+    ),
+    title="Common QMS Gaps by Quarter"
+)
+
+# %% Overall BSBS gaps
+gap_cols4 = [
+    "Internal or External BRM Audit/assessment not conducted",
+    "No waste records", 
+    "Waste is not weighed (No scale, etc)",
+    "No incinerator",
+    "Wrong waste segregation", 
+    "Waste decontamination before disposal not performed (No autoclave)",
+    "Bins colors not adhered to,not covered, or are missing",
+    "BRM commodity Stock out, incomplete lab safety equipment",
+    "Staff not trained/mentored in BRM",
+    "Missing BSBS Guidelines,manual",
+    "No BRM indicator monitored",
+    "No restricted access to lab",
+    "Waste collection, waiting area is missing, and/or without restriction",
+    "BioSafety cabinet broken down", 
+    "Lab was cluttered",
+    "Lab with no waste temporary storage",
+    "Accumulated heaps of waste",
+    "No BRM equipment servicing service providers",
+    "No emergency preparedness plan",
+    "No smoke detector",
+    "Poor sample packaging",
+    "Limited funding for QMS",
+    "safety signages not well displayed",
+    "Inconsistent water supply",
+    "No contract with Green label",
+    "No exit door",
+    "No proper waste transportation within facility", "Open waste burning"
+       
+]
+
+df_plot4 = bsbsgaps.copy()
+
+# create quarterly order
+qtr_order = {
+    "Jan-Mar": 1,
+    "Apri-Jun": 2,
+    "Apri-Jun": 2,
+    "Jul-Sept": 3,
+    "Oct-Dec": 4
+}
+
+df_plot4["Qtr_Order"] = df_plot4["Qtr"].map(qtr_order)
+
+df_plot4["Sort_Order"] = (
+    df_plot4["Yr"] * 10 +
+    df_plot4["Qtr_Order"]
+)
+
+df_plot4["Period"] = (
+    df_plot4["Qtr"] + " " +
+    df_plot4["Yr"].astype(str)
+)
+
+df_plot4 = df_plot4.sort_values("Sort_Order")
+
+# extract percentages
+for col in gap_cols4:
+    df_plot4[col] = (
+        df_plot4[col]
+        .astype(str)
+        .str.extract(r'([\d\.]+)', expand=False)
+        .astype(float)
+    )
+    
+heatmap_df4 = (
+    df_plot4
+    .set_index("Period")[gap_cols4]
+    .T
+)
+
+# draw the heatmap
+fig = px.imshow(
+    heatmap_df4,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="Reds",
+    labels=dict(
+        x="Quarter",
+        y="BSBS Gaps",
+        color="% of Sites"
+    ),
+    title="Common BSBS Gaps by Quarter"
+)
+
+fig.update_layout(
+    height=max(350, len(heatmap_df1.index) * 28),
+    font=dict(size=10),
+    margin=dict(
+        l=10,
+        r=10,
+        t=40,
+        b=10
+    )
+)
+
+fig.update_traces(
+    textfont_size=10
+)
+
+
+fig.update_xaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=11)
+)
+
+fig.update_yaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=9)
+)
+
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+# improving scale color
+fig = px.imshow(
+    heatmap_df4,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="RdYlGn_r",
+    labels=dict(
+        x="Quarter",
+        y="BSBS Gaps",
+        color="% of Sites"
+    ),
+    title="Common BSBS Gaps by Quarter"
+)
+
+
+# %% NSRTNgaps BSBS gaps
+gap_cols5 = [
+    "Long delivery TAT",
+    "Dalays in non-HIV related results return (e.g., SCD, outbreak)", 
+    "No backup hub riders",
+    "No service schedule, untimely service for M/Bikes",
+    "Poor, delay in sample packing", 
+    "Inadequate,delayed logistics,fuel for hub rider",
+    "Inadequate data bundles to relay, print results, track samples",
+    "High workload for the hub riders",
+    "Hub rider scheduled visits occasionally missed",
+    "Inadequate storage",
+    "Lab commodity Stockout in POC sites",
+    "TAT not monitored",
+    "M-Bike breakdown"
+       
+]
+
+df_plot5 = NSRTNgaps.copy()
+
+# create quarterly order
+qtr_order = {
+    "Jan-Mar": 1,
+    "Apri-Jun": 2,
+    "Apri-Jun": 2,
+    "Jul-Sept": 3,
+    "Oct-Dec": 4
+}
+
+df_plot5["Qtr_Order"] = df_plot5["Qtr"].map(qtr_order)
+
+df_plot5["Sort_Order"] = (
+    df_plot5["Yr"] * 10 +
+    df_plot5["Qtr_Order"]
+)
+
+df_plot5["Period"] = (
+    df_plot5["Qtr"] + " " +
+    df_plot5["Yr"].astype(str)
+)
+
+df_plot5 = df_plot5.sort_values("Sort_Order")
+
+# extract percentages
+for col in gap_cols5:
+    df_plot5[col] = (
+        df_plot5[col]
+        .astype(str)
+        .str.extract(r'([\d\.]+)', expand=False)
+        .astype(float)
+    )
+    
+heatmap_df5 = (
+    df_plot5
+    .set_index("Period")[gap_cols5]
+    .T
+)
+
+# draw the heatmap
+fig = px.imshow(
+    heatmap_df5,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="Reds",
+    labels=dict(
+        x="Quarter",
+        y="NSRTN Gaps",
+        color="% of Sites"
+    ),
+    title="Common NSRTN Gaps by Quarter"
+)
+
+fig.update_layout(
+    height=max(350, len(heatmap_df1.index) * 28),
+    font=dict(size=10),
+    margin=dict(
+        l=10,
+        r=10,
+        t=40,
+        b=10
+    )
+)
+
+fig.update_traces(
+    textfont_size=10
+)
+
+
+fig.update_xaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=11)
+)
+
+fig.update_yaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=9)
+)
+
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+# improving scale color
+fig = px.imshow(
+    heatmap_df5,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="RdYlGn_r",
+    labels=dict(
+        x="Quarter",
+        y="NSRTN Gaps",
+        color="% of Sites"
+    ),
+    title="Common NSRTN Gaps by Quarter"
+)
+
+# %% ictgaps BSBS gaps
+gap_cols6 = [
+    "ALIS not installed/used",
+    "Inadequate Intenet bundles to support uninterrupted LIMS", 
+    "Machines not connected to LIMS", 
+    "Not implementing HIE",
+    "Occasional LIMS breakdown, slows down",
+    "No EMR, unstable other EMR, e.g., eafya", 
+    "Inadequate/No computer/s to implement e-LIMS",
+    "EID lab requests not performed electronically",
+    "No electonic results transmission", 
+    "Data clerk/office not training in LIMS"
+]
+
+df_plot6 = ictgaps.copy()
+
+# create quarterly order
+qtr_order = {
+    "Jan-Mar": 1,
+    "Apri-Jun": 2,
+    "Apri-Jun": 2,
+    "Jul-Sept": 3,
+    "Oct-Dec": 4
+}
+
+df_plot6["Qtr_Order"] = df_plot6["Qtr"].map(qtr_order)
+
+df_plot6["Sort_Order"] = (
+    df_plot6["Yr"] * 10 +
+    df_plot6["Qtr_Order"]
+)
+
+df_plot6["Period"] = (
+    df_plot6["Qtr"] + " " +
+    df_plot6["Yr"].astype(str)
+)
+
+df_plot6 = df_plot6.sort_values("Sort_Order")
+
+# extract percentages
+for col in gap_cols6:
+    df_plot6[col] = (
+        df_plot6[col]
+        .astype(str)
+        .str.extract(r'([\d\.]+)', expand=False)
+        .astype(float)
+    )
+    
+heatmap_df6 = (
+    df_plot6
+    .set_index("Period")[gap_cols6]
+    .T
+)
+
+# draw the heatmap
+fig = px.imshow(
+    heatmap_df6,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="Reds",
+    labels=dict(
+        x="Quarter",
+        y="ICT Gaps",
+        color="% of Sites"
+    ),
+    title="Common ICT Gaps by Quarter"
+)
+
+fig.update_layout(
+    height=max(350, len(heatmap_df1.index) * 28),
+    font=dict(size=10),
+    margin=dict(
+        l=10,
+        r=10,
+        t=40,
+        b=10
+    )
+)
+
+fig.update_traces(
+    textfont_size=10
+)
+
+
+fig.update_xaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=11)
+)
+
+fig.update_yaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=9)
+)
+
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+# improving scale color
+fig = px.imshow(
+    heatmap_df6,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="RdYlGn_r",
+    labels=dict(
+        x="Quarter",
+        y="ICT Gaps",
+        color="% of Sites"
+    ),
+    title="Common ICT Gaps by Quarter"
+)
+
+# %% MBgaps BSBS gaps
+gap_cols7 = [
+    "Knowledge gap to perform microbiology tests",
+    "No microbiology,bacteriology lab", 
+    "No, stock out of microbiology reagents, collection kits", 
+    "Not trained to perform AMR", 
+    "no antibiogram established",
+    "Inadequate space",
+    "Inadequate equipment to perform microbiology,culture", 
+    "No mentorships held",
+    "Staff not trained in risk managment",
+    "Faulty Air conditioning", 
+    "Inadequate staff numbers",
+    "No Biosafety cabinet"
+]
+
+df_plot7 = MBgaps.copy()
+
+# create quarterly order
+qtr_order = {
+    "Jan-Mar": 1,
+    "Apri-Jun": 2,
+    "Apri-Jun": 2,
+    "Jul-Sept": 3,
+    "Oct-Dec": 4
+}
+
+df_plot7["Qtr_Order"] = df_plot7["Qtr"].map(qtr_order)
+
+df_plot7["Sort_Order"] = (
+    df_plot7["Yr"] * 10 +
+    df_plot7["Qtr_Order"]
+)
+
+df_plot7["Period"] = (
+    df_plot7["Qtr"] + " " +
+    df_plot7["Yr"].astype(str)
+)
+
+df_plot7 = df_plot7.sort_values("Sort_Order")
+
+# extract percentages
+for col in gap_cols7:
+    df_plot7[col] = (
+        df_plot7[col]
+        .astype(str)
+        .str.extract(r'([\d\.]+)', expand=False)
+        .astype(float)
+    )
+    
+heatmap_df7 = (
+    df_plot7
+    .set_index("Period")[gap_cols7]
+    .T
+)
+
+# draw the heatmap
+fig = px.imshow(
+    heatmap_df7,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="Reds",
+    labels=dict(
+        x="Quarter",
+        y="Microbiolgy Gaps",
+        color="% of Sites"
+    ),
+    title="Common Microbiolgy Gaps by Quarter"
+)
+
+fig.update_layout(
+    height=max(350, len(heatmap_df1.index) * 28),
+    font=dict(size=10),
+    margin=dict(
+        l=10,
+        r=10,
+        t=40,
+        b=10
+    )
+)
+
+fig.update_traces(
+    textfont_size=10
+)
+
+
+fig.update_xaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=11)
+)
+
+fig.update_yaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=9)
+)
+
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+# improving scale color
+fig = px.imshow(
+    heatmap_df7,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="RdYlGn_r",
+    labels=dict(
+        x="Quarter",
+        y="Microbiolgy Gaps",
+        color="% of Sites"
+    ),
+    title="Common Microbiolgy Gaps by Quarter"
+)
 
