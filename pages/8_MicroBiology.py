@@ -100,20 +100,20 @@ def col_rag2(val):
 # %% Load the data frames
 
 # Microbiology KPIs
-file_path40 = "Data/MB/rrh_MB_tech_capacity.xls"
+file_path40 = "Data/mb/rrh_MB_tech_capacity.xls"
 MBTA  =  pd.read_excel(file_path40)
 
 # Microbiology Details
-file_path41 = "Data/MB/MB_details.xls"
+file_path41 = "Data/mb/MB_details.xls"
 MB_Details  =  pd.read_excel(file_path41)
 
 
 # Gaps RRH
-file_path40322 = "Data/MB/rrhMB_gaps.xls"
+file_path40322 = "Data/mb/rrhMB_gaps.xls"
 MBgaps  =  pd.read_excel(file_path40322)
 
 # Microbiology Details
-file_path413234 = "Data/MB/rrhMB_tracker.xls"
+file_path413234 = "Data/mb/rrhMB_tracker.xls"
 MBtracker  =  pd.read_excel(file_path413234)
 
 
