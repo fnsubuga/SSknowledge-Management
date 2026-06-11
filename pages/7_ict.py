@@ -13,6 +13,7 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import altair as alt
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode
+from pathlib import Path
 
 # -----------------------------------------------------
 # Streamlit Page Config
@@ -86,19 +87,43 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # %% Load the data frames
 
 # ICT RRH KPIs
-file_path30 = "Data/ict/rrh_all_ict_kpi_status.xls"
+file_path30 = Path("Data") / "ict" / "rrh_all_ict_kpi_status.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path30.exists():
+    file_path30 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\ict\rrh_all_ict_kpi_status.xls"
+    )
 ictkpis  =  pd.read_excel(file_path30)
 
 # ICT Health Facility Detail
-file_path31 = "Data/ict/ict_detail.xls"
+file_path31 = Path("Data") / "ict" / "ict_detail.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path31.exists():
+    file_path31 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\ict\ict_detail.xls"
+    )
 ictDetails  =  pd.read_excel(file_path31)
 
 # ICT gaps
-file_path3023 = "Data/ict/rrhict_gaps.xls"
+file_path3023 = Path("Data") / "ict" / "rrhict_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path3023.exists():
+    file_path3023 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\ict\rrhict_gaps.xls"
+    )
 ictgaps  =  pd.read_excel(file_path3023)
 
 # ICT action tracker
-file_path3143 = "Data/ict/rrhict_gapsDetail.xls"
+file_path3143 = Path("Data") / "ict" / "rrhict_gapsDetail.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path3143.exists():
+    file_path3143 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\ict\rrhict_gapsDetail.xls"
+    )
 ictactiontracker  =  pd.read_excel(file_path3143)
 
 

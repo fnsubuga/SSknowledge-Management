@@ -13,6 +13,7 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import altair as alt
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode
+from pathlib import Path
 
 # -----------------------------------------------------
 # Streamlit Page Config
@@ -87,25 +88,55 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # %% Load the data frames
 
 # BSBS RRH KPIs
-file_path16 = "Data/BSBS/rrh_bsbs_KPI_Summary.xls"
+file_path16 = Path("Data") / "BSBS" / "rrh_bsbs_KPI_Summary.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path16.exists():
+    file_path16 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\BSBS\rrh_bsbs_KPI_Summary.xls"
+    )
 bsbsKPI  =  pd.read_excel(file_path16)
 
 # BSBS best practices not implemented
-file_path16 = "Data/BSBS/rrh_bstpractices_not_Implemented.xls"
-bsbs_prac  =  pd.read_excel(file_path16)
+file_path1611 = Path("Data") / "BSBS" / "rrh_bstpractices_not_Implemented.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path1611.exists():
+    file_path1611 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\BSBS\rrh_bstpractices_not_Implemented.xls"
+    )
+bsbs_prac  =  pd.read_excel(file_path1611)
 
 
 # BSBS Health Facility Detail
-file_path17 = "Data/BSBS/hFac_bsbs_details.xls"
+file_path17 = Path("Data") / "BSBS" / "hFac_bsbs_details.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path17.exists():
+    file_path17 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\BSBS\hFac_bsbs_details.xls"
+    )
 bsbsHfac  =  pd.read_excel(file_path17)
 
 # BSBS gaps
-file_path1622 = "Data/BSBS/rrh_bsbs_gaps.xls"
+file_path1622 = Path("Data") / "BSBS" / "rrh_bsbs_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path1622.exists():
+    file_path1622 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\BSBS\rrh_bsbs_gaps.xls"
+    )
 bsbs_gaps  =  pd.read_excel(file_path1622)
 
 
 # BSBS action tracker
-file_path1721 = "Data/BSBS/rrh_bsbs_gapsDetail.xls"
+file_path1721 = Path("Data") / "BSBS" / "rrh_bsbs_gapsDetail.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path1721.exists():
+    file_path1721 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\BSBS\rrh_bsbs_gapsDetail.xls"
+    )
 bsbs_actintracker  =  pd.read_excel(file_path1721)
 
 

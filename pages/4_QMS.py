@@ -13,7 +13,7 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import altair as alt
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode
-
+from pathlib import Path
 # -----------------------------------------------------
 # Streamlit Page Config
 # -----------------------------------------------------
@@ -88,23 +88,54 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # -----------------------------------------------------
 
 # RRH Summary of KPI indicators
-file_path13 = "Data/QMS/rrh_QMS_status.xls"
+file_path13 = Path("Data") / "QMS" / "rrh_QMS_status.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path13.exists():
+    file_path13 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\QMS\rrh_QMS_status.xls"
+    )
 qms = pd.read_excel(file_path13)
 
 # Tests without EQA Schemes by RRH
-file_path15 = "Data/QMS/testNotonEQA_RRH.xls"
+file_path15 = Path("Data") / "QMS" / "testNotonEQA_RRH.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path15.exists():
+    file_path15 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\QMS\testNotonEQA_RRH.xls"
+    )
+
 NotestEQArrh  =  pd.read_excel(file_path15)
 
 # QMS Detailed Table
-file_path14 = "Data/QMS/QMS_details_RRH.xls"
+file_path14 = Path("Data") / "QMS" / "QMS_details_RRH.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path14.exists():
+    file_path14 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\QMS\QMS_details_RRH.xls"
+    )
 QMSDetail = pd.read_excel(file_path14)
 
 # Gaps
-file_path1523 = "Data/QMS/rrhQMS_gaps_RRH.xls"
+file_path1523 = Path("Data") / "QMS" / "rrhQMS_gaps_RRH.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path1523.exists():
+    file_path1523 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\QMS\rrhQMS_gaps_RRH.xls"
+    )
 QMSgaps  =  pd.read_excel(file_path1523)
 
 # QMS Detailed Table
-file_path1432 = "Data/QMS/QMS_actiontracker_RRH.xls"
+file_path1432 = Path("Data") / "QMS" / "QMS_actiontracker_RRH.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path1432.exists():
+    file_path1432 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\QMS\QMS_actiontracker_RRH.xls"
+    )
 QMSactiontracker = pd.read_excel(file_path1432)
 
 

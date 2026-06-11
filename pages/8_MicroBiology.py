@@ -13,6 +13,7 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import altair as alt
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode, ColumnsAutoSizeMode 
+from pathlib import Path
 
 # -----------------------------------------------------
 # Streamlit Page Config
@@ -100,20 +101,46 @@ def col_rag2(val):
 # %% Load the data frames
 
 # Microbiology KPIs
-file_path40 = "Data/mb/rrh_MB_tech_capacity.xls"
+file_path40 = Path("Data") / "mb" / "rrh_MB_tech_capacity.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path40.exists():
+    file_path40 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\mb\rrh_MB_tech_capacity.xls"
+    )
 MBTA  =  pd.read_excel(file_path40)
 
 # Microbiology Details
-file_path41 = "Data/mb/MB_details.xls"
+file_path41 = Path("Data") / "mb" / "MB_details.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path41.exists():
+    file_path41 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\mb\MB_details.xls"
+    )
+
 MB_Details  =  pd.read_excel(file_path41)
 
 
 # Gaps RRH
-file_path40322 = "Data/mb/rrhMB_gaps.xls"
+file_path40322 = Path("Data") / "mb" / "rrhMB_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path40322.exists():
+    file_path40322 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\mb\rrhMB_gaps.xls"
+    )
 MBgaps  =  pd.read_excel(file_path40322)
 
 # Microbiology Details
-file_path413234 = "Data/mb/rrhMB_tracker.xls"
+file_path413234 = Path("Data") / "mb" / "rrhMB_tracker.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path413234.exists():
+    file_path413234 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\mb\rrhMB_tracker.xls"
+    )
+
 MBtracker  =  pd.read_excel(file_path413234)
 
 

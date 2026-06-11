@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 import altair as alt
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode
 import pprint
-
+from pathlib import Path
 
 # -----------------------------------------------------
 # Streamlit Page Config
@@ -79,20 +79,44 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 
 # Health Facilties reached in support supervision
 
-file_path3 = "Data/Equipt/rrh_equip_KPI.xls"
+file_path3 = Path("Data") / "Equipt" / "rrh_equip_KPI.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path3.exists():
+    file_path3 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\Equipt\rrh_equip_KPI.xls"
+    )
 Fac_linelist  = pd.read_excel(file_path3)
 
 # Detailed equipment table
-file_path11  = "Data/Equipt/equip_detail.xls"
+file_path11 = Path("Data") / "Equipt" / "equip_detail.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path11.exists():
+    file_path11 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\Equipt\equip_detail.xls"
+    )
 equip_detail =  pd.read_excel(file_path11)
 
 # gaps RRH
-file_path112  = "Data/Equipt/rrhequip_gaps.xls"
+file_path112 = Path("Data") / "Equipt" / "rrhequip_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path112.exists():
+    file_path112 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\Equipt\rrhequip_gaps.xls"
+    )
 equip_gaps =  pd.read_excel(file_path112)
 
 
 # Detailed gaps
-file_path113  = "Data/Equipt/rrhequip_gapsdetails.xls"
+file_path113 = Path("Data") / "Equipt" / "rrhequip_gapsdetails.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path113.exists():
+    file_path113 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\Equipt\rrhequip_gapsdetails.xls"
+    )
 equip_gapsDetail =  pd.read_excel(file_path113)
 
 # %% Common filter

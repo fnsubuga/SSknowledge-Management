@@ -12,7 +12,7 @@ import seaborn as sns
 import plotly.express as px
 import matplotlib.pyplot as plt
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode
-
+from pathlib import Path
 # -----------------------------------------------------
 # Streamlit Page Config
 # -----------------------------------------------------
@@ -55,15 +55,34 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # %% Load the data frames
 
 # Test menu KPI status by RRH region
-file_path2 = "Data/TestMenu/test_menu_implementationRRH.xls"
+file_path2 = Path("Data") / "TestMenu" / "test_menu_implementationRRH.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path2.exists():
+    file_path2 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\TestMenu\test_menu_implementationRRH.xls"
+    )
 RRHTestMenu = pd.read_excel(file_path2)
 
 # gaps
-file_path212 = "Data/TestMenu/rrhtest_menu_gaps.xls"
+file_path212 = Path("Data") / "TestMenu" / "rrhtest_menu_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path212.exists():
+    file_path212 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\TestMenu\rrhtest_menu_gaps.xls"
+    )
 TestMenugaps = pd.read_excel(file_path212)
 
 # action points
-file_path232 = "Data/TestMenu/rrhtest_menu_gapDetail.xls"
+file_path232 = Path("Data") / "TestMenu" / "rrhtest_menu_gapDetail.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path232.exists():
+    file_path232 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\TestMenu\rrhtest_menu_gapDetail.xls"
+    )
+
 TestMenuactions = pd.read_excel(file_path232)
 
 

@@ -13,6 +13,7 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import altair as alt
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode, ColumnsAutoSizeMode 
+from pathlib import Path
 
 # -----------------------------------------------------
 # Streamlit Page Config
@@ -110,20 +111,47 @@ def col_rag2(val):
 # %% Load the data frames
 
 # Radiology equipment in place
-file_path40 = "Data/radiology/rrh_radgy_kpis.xls"
+file_path40 = Path("Data") / "radiology" / "rrh_radgy_kpis.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path40.exists():
+    file_path40 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\radiology\rrh_radgy_kpis.xls"
+    )
+
 radgy  =  pd.read_excel(file_path40)
 
 # Microbiology Details
-file_path41 = "Data/radiology/radgy_QAs.xls"
+file_path41 = Path("Data") / "radiology" / "radgy_QAs.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path41.exists():
+    file_path41 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\radiology\radgy_QAs.xls"
+    )
+
 radgy_Details  =  pd.read_excel(file_path41)
 
 
 # Gaps
-file_path4054 = "Data/radiology/rrhradgy_gaps.xls"
+file_path4054 = Path("Data") / "radiology" / "rrhradgy_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path4054.exists():
+    file_path4054 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\radiology\rrhradgy_gaps.xls"
+    )
 radgygaps  =  pd.read_excel(file_path4054)
 
 # Action tracker
-file_path4154 = "Data/radiology/rrhradgy_gapsdetail.xls"
+file_path4154 = Path("Data") / "radiology" / "rrhradgy_gapsdetail.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path4154.exists():
+    file_path4154 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\radiology\rrhradgy_gapsdetail.xls"
+    )
+
 radgyActionTracker  =  pd.read_excel(file_path4154)
 
 
