@@ -539,12 +539,31 @@ fig = px.imshow(
 )
 
 fig.update_layout(
-    height=350
+    height=max(350, len(heatmap_df.index) * 28),
+    font=dict(size=10),
+    margin=dict(
+        l=10,
+        r=10,
+        t=40,
+        b=10
+    )
 )
 
 fig.update_traces(
-    textfont_size=9
+    textfont_size=10
 )
+
+
+fig.update_xaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=9)
+)
+
+fig.update_yaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=9)
+)
+
 
 st.plotly_chart(
     fig,
