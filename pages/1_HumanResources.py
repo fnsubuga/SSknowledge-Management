@@ -96,60 +96,35 @@ def col_rag2(val):
         return "color: red; font-weight: bold;"
 # %% Load the data frames
 
-# HR KPI status by RRH region
-file_path2 = Path("Data/HR/rrhHR_KPIs.xls")
+file_path2 = Path("Data") / "HR" / "rrhHR_KPIs.xlsx"
 
+# Fallback to local path when running in Spyder
 if not file_path2.exists():
     file_path2 = Path(
-        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\rrhHR_KPIs.xls"
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\rrhHR_KPIs.xlsx"
     )
+
 HRLevel = pd.read_excel(file_path2)
 
-# HR not available by RRH by level
-file_path3 = "Data/HR/Prop_cadres_unavailable_RRH_lvl.xls"
 
-if not file_path2.exists():
-    file_path2 = Path(
-        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\Prop_cadres_unavailable_RRH_lvl.xls"
-    )
+# HR not available by RRH by level
+file_path3 = "Data/HR/Prop_cadres_unavailable_RRH_lvl.xlsx"
 HRRgns  =  pd.read_excel(file_path3)
 
 # Cadres unavailable by health level
 file_path4 = "Data/HR/Prop_cadres_unavailable_lvl.xlsx"
-
-if not file_path2.exists():
-    file_path2 = Path(
-        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\Prop_cadres_unavailable_lvl.xls"
-    )
-
 CadreAvail  =  pd.read_excel(file_path4)
 
 # HR detailed table
 file_path6 = "Data/HR/Detailed_HR.xlsx"
-
-if not file_path2.exists():
-    file_path2 = Path(
-        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\Detailed_HR.xls"
-    )
 HRDetail  =  pd.read_excel(file_path6)
 
 # Gaps
 file_path411 = "Data/HR/rrh_Gaps_HR.xlsx"
-
-if not file_path2.exists():
-    file_path2 = Path(
-        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\rrh_Gaps_HR.xls"
-    )
 hrgaps  =  pd.read_excel(file_path411)
 
 # action tracker
 file_path611 = "Data/HR/actionTracker_HR.xlsx"
-
-if not file_path2.exists():
-    file_path2 = Path(
-        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\actionTracker_HR.xls"
-    )
-
 HRactionTracker  =  pd.read_excel(file_path611)
 
 # %% Rename the columns - RRH to not crash with the RRH level naming
