@@ -105,7 +105,7 @@ if not file_path32323.exists():
     )
 allKPIs  = pd.read_excel(file_path32323)
 
-# Gaps
+# HR Gaps
 file_path2435 = Path("Data") / "HR" / "aps_HR.xlsx"
 # Fallback to local path when running in Spyder
 if not file_path2435.exists():
@@ -114,6 +114,17 @@ if not file_path2435.exists():
     )
 
 NatHR_Gaps = pd.read_excel(file_path2435)
+
+# Test Menu gaps
+file_path23222 = Path("Data") / "TestMenu" / "test_menu_gaps.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path23222.exists():
+    file_path23222 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\TestMenu\test_menu_gaps.xls"
+    )
+
+TestMenuallgaps = pd.read_excel(file_path23222)
 
 
 # KPI summary table
@@ -556,7 +567,7 @@ fig.update_traces(
 
 fig.update_xaxes(
     title_font=dict(size=11),
-    tickfont=dict(size=9)
+    tickfont=dict(size=11)
 )
 
 fig.update_yaxes(
@@ -584,6 +595,118 @@ fig = px.imshow(
     title="Common HR Gaps by Quarter"
 )
 
+# %% Overall test menu gaps
+gap_cols1 = [
+    "Stock out, missing reagents, delays in supply delivery",
+    "Missing equipment", 
+    "No functional specialized lab/Infrastructure",
+    "Unstable Power",
+    "No staff, understaffing",
+    "Faulty,Unserviced Equipment",
+    "Clinicians not requesting the test",
+    "No QA,IQC materials",
+    "Missing SOPs"
+]
+
+df_plot1 = TestMenuallgaps.copy()
+
+# create quarterly order
+qtr_order = {
+    "Jan-Mar": 1,
+    "Apri-Jun": 2,
+    "Apri-Jun": 2,
+    "Jul-Sept": 3,
+    "Oct-Dec": 4
+}
+
+df_plot1["Qtr_Order"] = df_plot1["Qtr"].map(qtr_order)
+
+df_plot1["Sort_Order"] = (
+    df_plot1["Yr"] * 10 +
+    df_plot1["Qtr_Order"]
+)
+
+df_plot1["Period"] = (
+    df_plot1["Qtr"] + " " +
+    df_plot1["Yr"].astype(str)
+)
+
+df_plot1 = df_plot1.sort_values("Sort_Order")
+
+# extract percentages
+for col in gap_cols1:
+    df_plot1[col] = (
+        df_plot1[col]
+        .astype(str)
+        .str.extract(r'([\d\.]+)', expand=False)
+        .astype(float)
+    )
+    
+heatmap_df1 = (
+    df_plot1
+    .set_index("Period")[gap_cols1]
+    .T
+)
+
+# draw the heatmap
+fig = px.imshow(
+    heatmap_df1,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="Reds",
+    labels=dict(
+        x="Quarter",
+        y="Test Menu delivery Gaps",
+        color="% of Sites"
+    ),
+    title="Common Test Menu delivery Gaps by Quarter"
+)
+
+fig.update_layout(
+    height=max(350, len(heatmap_df1.index) * 28),
+    font=dict(size=10),
+    margin=dict(
+        l=10,
+        r=10,
+        t=40,
+        b=10
+    )
+)
+
+fig.update_traces(
+    textfont_size=10
+)
+
+
+fig.update_xaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=11)
+)
+
+fig.update_yaxes(
+    title_font=dict(size=11),
+    tickfont=dict(size=9)
+)
+
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+# improving scale color
+fig = px.imshow(
+    heatmap_df1,
+    text_auto=".1f",
+    aspect="auto",
+    color_continuous_scale="RdYlGn_r",
+    labels=dict(
+        x="Quarter",
+        y="Test Menu delivery Gaps",
+        color="% of Sites"
+    ),
+    title="Common Test Menu delivery Gaps by Quarter"
+)
 
 
 
