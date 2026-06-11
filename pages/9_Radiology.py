@@ -110,20 +110,20 @@ def col_rag2(val):
 # %% Load the data frames
 
 # Radiology equipment in place
-file_path40 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/radiology/rrh_radgy_kpis.xls"
+file_path40 = "Data/radiology/rrh_radgy_kpis.xls"
 radgy  =  pd.read_excel(file_path40)
 
 # Microbiology Details
-file_path41 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/radiology/radgy_QA.xls"
+file_path41 = "Data/radiology/radgy_QA.xls"
 radgy_Details  =  pd.read_excel(file_path41)
 
 
 # Gaps
-file_path4054 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/radiology/rrhradgy_gaps.xls"
+file_path4054 = "Data/radiology/rrhradgy_gaps.xls"
 radgygaps  =  pd.read_excel(file_path4054)
 
 # Action tracker
-file_path4154 = "D:/CPHL-MOH/Support Supervision/2026/May 2025/radiology/rrhradgy_gapsdetail.xls"
+file_path4154 = "Data/radiology/rrhradgy_gapsdetail.xls"
 radgyActionTracker  =  pd.read_excel(file_path4154)
 
 
