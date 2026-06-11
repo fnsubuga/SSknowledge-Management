@@ -542,6 +542,10 @@ fig.update_layout(
     height=350
 )
 
+fig.update_traces(
+    textfont_size=9
+)
+
 st.plotly_chart(
     fig,
     use_container_width=True
