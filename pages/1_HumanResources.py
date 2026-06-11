@@ -108,7 +108,7 @@ HRLevel = pd.read_excel(file_path2)
 
 
 # HR not available by RRH by level
-file_path3 = Path("Data") / "HR" / "rrhHR_KPIs.xlsx"
+file_path3 = Path("Data") / "HR" / "Prop_cadres_unavailable_RRH_lvl.xlsx"
 
 # Fallback to local path when running in Spyder
 if not file_path3.exists():
