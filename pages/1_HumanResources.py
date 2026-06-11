@@ -212,7 +212,15 @@ filter_CadreAvaill = filtered_tables["CadreAvaill"]
 filter_hrgapsRpt = filtered_tables["hrgapsRpt"]
 filter_hr_tracker = filtered_tables["hr_tracker"]
 
+# %% rename columns
+filter_hrgapsRpt  =  filter_hrgapsRpt.rename(columns  = {
+    "RRH"  :  "RRH_Region"
+        })
 
+
+filter_hr_tracker   =  filter_hr_tracker.rename(columns = {
+    "RRH"  :  "RRH_Region"
+    })
 
 
 # %% HR KPIs 
