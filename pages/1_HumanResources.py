@@ -634,6 +634,49 @@ for col in target_cols:
         gb.configure_column(col, cellStyle=cellstyle_jscode3)
 
 
+# wrap and rename
+
+gb.configure_column(
+    "The facility possesses all the required cadre categories (See attachment)",
+    headerName="Lab has required cadres",
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    headerClass="small-header"
+)
+
+gb.configure_column(
+    "List of cadre categories unavailable in the facility",
+    headerName="Cadres not available",
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    headerClass="small-header"
+)
+
+gb.configure_column(
+    "The facility has required cadres, but, in inadequate numbers in the health facility",
+    headerName="No. of cadres below required",
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    headerClass="small-header"
+)
+
+gb.configure_column(
+    "List of HR cadres with inadequate numbers",
+    headerName="Cadres with inadequate no.s",
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    headerClass="small-header"
+)
+
+gb.configure_column(
+    "Laboratory workforce received any training (facility or offsite) in TB molecular tools in the last 2 years",
+    headerName="Has received TB molecular training",
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    headerClass="small-header"
+)
+
+
 
 # Configure default column behavior
 gb.configure_default_column(
