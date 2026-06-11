@@ -539,7 +539,7 @@ fig = px.imshow(
 )
 
 fig.update_layout(
-    height=250
+    height=350
 )
 
 st.plotly_chart(
