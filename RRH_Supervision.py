@@ -97,8 +97,7 @@ Fac_linelist  = pd.read_excel(file_path3)
 
 
 # All KPIs
-file_path32323 = Path("Data") / "KPI_Summary.xls"
-
+file_path32323 = Path("..") / "KPI_Summary.xls"
 # Fallback to local path when running in Spyder
 if not file_path32323.exists():
     file_path32323 = Path(
