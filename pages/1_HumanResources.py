@@ -108,23 +108,50 @@ HRLevel = pd.read_excel(file_path2)
 
 
 # HR not available by RRH by level
-file_path3 = "Data/HR/Prop_cadres_unavailable_RRH_lvl.xlsx"
+file_path3 = Path("Data") / "HR" / "rrhHR_KPIs.xlsx"
+
+# Fallback to local path when running in Spyder
+if not file_path3.exists():
+    file_path3 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\Prop_cadres_unavailable_RRH_lvl.xlsx"
+    )
 HRRgns  =  pd.read_excel(file_path3)
 
 # Cadres unavailable by health level
-file_path4 = "Data/HR/Prop_cadres_unavailable_lvl.xlsx"
+file_path4 = Path("Data") / "HR" / "Prop_cadres_unavailable_lvl.xlsx"
+# Fallback to local path when running in Spyder
+if not file_path4.exists():
+    file_path4 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\Prop_cadres_unavailable_lvl.xlsx"
+    )
+
 CadreAvail  =  pd.read_excel(file_path4)
 
 # HR detailed table
-file_path6 = "Data/HR/Detailed_HR.xlsx"
+file_path6 = Path("Data") / "HR" / "Detailed_HR.xlsx"
+# Fallback to local path when running in Spyder
+if not file_path6.exists():
+    file_path6 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\Detailed_HR.xlsx"
+    )
 HRDetail  =  pd.read_excel(file_path6)
 
 # Gaps
-file_path411 = "Data/HR/rrh_Gaps_HR.xlsx"
+file_path411 = Path("Data") / "HR" / "rrh_Gaps_HR.xlsx"
+# Fallback to local path when running in Spyder
+if not file_path411.exists():
+    file_path411 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\rrh_Gaps_HR.xlsx"
+    )
 hrgaps  =  pd.read_excel(file_path411)
 
 # action tracker
-file_path611 = "Data/HR/actionTracker_HR.xlsx"
+file_path611 = Path("Data") / "HR" / "actionTracker_HR.xlsx"
+# Fallback to local path when running in Spyder
+if not file_path611.exists():
+    file_path611 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\HR\actionTracker_HR.xlsx"
+    )
 HRactionTracker  =  pd.read_excel(file_path611)
 
 # %% Rename the columns - RRH to not crash with the RRH level naming
@@ -142,7 +169,7 @@ HRDetail   =  HRDetail.rename(columns = {
         })
 
 # re-arrange the columns
-first_cols = ['RRH_Region', 'District','HFacility','LEVEL','VDate','Yr','Qtr']
+first_cols = ['RRH_Region','District','HFacility', 'LEVEL','VDate', 'Yr','Qtr']
 remaining_cols = [col for col in HRDetail.columns if col not in first_cols]
 HRDetail  =  HRDetail[first_cols + remaining_cols]
 
@@ -259,10 +286,10 @@ gb.configure_column(
 
 # wrap columns
 for col in [
-    "%age of labs that possess all the required cadre categories",
-    "% of labs with required cadres, but, in inadequate numbers in the health facility",
-    "%age of labs whose staff receive targeted capacity-building",
-    "%age of labs whose staff received TB molecular training in last 2 Yrs"
+    "Pct_hrinPlace",
+    "Pct_InadequatehrinPlace",
+    "Pct_hrCap_buildg",
+    "Pct_TB_Cap_Buildg"
 ]:
     gb.configure_column(
     col,
@@ -299,15 +326,49 @@ function(params) {
 """)
 
 # Columns to color
-target_cols = ["%age of labs that possess all the required cadre categories", 
-               "% of labs with required cadres, but, in inadequate numbers in the health facility", 
-               "%age of labs whose staff receive targeted capacity-building", 
-               "%age of labs whose staff received TB molecular training in last 2 Yrs"]
+target_cols = ["Pct_hrinPlace",
+               "Pct_InadequatehrinPlace",
+               "Pct_hrCap_buildg",
+               "Pct_TB_Cap_Buildg"]
 
 # apply the conditioning to the columns of interest
 for col in target_cols:
     if col in filter_HR_Status.columns:
         gb.configure_column(col, cellStyle=cellstyle_jscode2)
+        
+# wrap and rename
+gb.configure_column(
+    "Pct_hrinPlace",
+    headerName="%age of labs that possess all the required cadre categories",
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    headerClass="small-header"
+)
+
+gb.configure_column(
+    "Pct_InadequatehrinPlace",
+    headerName="% of labs with required cadres, but, in inadequate numbers in the health facility",
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    headerClass="small-header"
+)
+
+gb.configure_column(
+    "Pct_hrCap_buildg",
+    headerName="%age of labs whose staff receive targeted capacity-building",
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    headerClass="small-header"
+)
+
+gb.configure_column(
+    "Pct_TB_Cap_Buildg",
+    headerName="%age of labs whose staff received TB molecular training in last 2 Yrs",
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    headerClass="small-header"
+)
+
 
 # Configure default column behavior
 gb.configure_default_column(
@@ -430,7 +491,8 @@ target_cols = ["RRH", "HOSPITAL", "HC IV", "HC III"]
 for col in target_cols:
     if col in filter_Prop_HRRgns.columns:
         gb.configure_column(col, cellStyle=cellstyle_jscode)
-
+        
+              
 # Configure default column behavior
 gb.configure_default_column(
     wrapText=True,              # Enable text wrapping
@@ -524,16 +586,15 @@ for col in [
     "HFacility",
     "LEVEL",
     "VDate",
-    "Yr",
+     "Yr",
     "Qtr",
     "The facility possesses all the required cadre categories (See attachment)",
     "List of cadre categories unavailable in the facility",
     "The facility has required cadres, but, in inadequate numbers in the health facility",
     "List of HR cadres with inadequate numbers",
     "The staff receive targeted capacity-building",
-    "Laboratory workforce received any training (facility or offsite) in TB molecular tools in the last 2 years"
-    
-]:
+    "Laboratory workforce received any training (facility or offsite) in TB molecular tools in the last 2 years"    
+   ]:
     gb.configure_column(
     col,
     wrapHeaderText=True,
@@ -565,69 +626,48 @@ function(params) {
 """)
 
 # Columns to color
-target_cols = ["The facility possesses all the required cadre categories (See attachment)", 
-               "The facility has required cadres, but, in inadequate numbers in the health facility", 
-               "The staff receive targeted capacity-building"]
+target_cols = ["The facility possesses all the required cadre categories (See attachment)",
+               "The staff receive targeted capacity-building",
+               "Laboratory workforce received any training (facility or offsite) in TB molecular tools in the last 2 years"]
 
 for col in target_cols:
     if col in filter_HRdetail.columns:
         gb.configure_column(col, cellStyle=cellstyle_jscode3)
 
 # Wrap long column headers properly
+# wrap and rename
 gb.configure_column(
-    "The facility possesses all the required cadre categories (See attachment)",
-    headerName="All cadres available",
-    wrapHeaderText=True,
-    autoHeaderHeight=True
-)
-
-gb.configure_column(
-    "List of cadre categories unavailable in the facility",
-    headerName="Cadres not available",
+    "Pct_hrinPlace",
+    headerName="%age of labs that possess all the required cadre categories",
     wrapHeaderText=True,
     autoHeaderHeight=True,
-    cellStyle={
-        'fontSize': '8px',     
-        'lineHeight': '13px'  
-    }
+    headerClass="small-header"
 )
 
 gb.configure_column(
-    "The facility has required cadres, but, in inadequate numbers in the health facility",
-    headerName="Inadequate cadres numbers available",
-    wrapHeaderText=True,
-    autoHeaderHeight=True
-)
-
-
-gb.configure_column(
-    "List of HR cadres with inadequate numbers",
-    headerName="HR cadres with inadequate numbers",
+    "Pct_InadequatehrinPlace",
+    headerName="% of labs with required cadres, but, in inadequate numbers in the health facility",
     wrapHeaderText=True,
     autoHeaderHeight=True,
-    cellStyle={
-        'fontSize': '8px',     
-        'lineHeight': '13px'  
-    }
+    headerClass="small-header"
 )
 
 gb.configure_column(
-    "The staff receive targeted capacity-building",
-    headerName="Targeted Capacity-building received",
-    wrapHeaderText=True,
-    autoHeaderHeight=True
-)
-
-gb.configure_column(
-    "Laboratory workforce received any training (facility or offsite) in TB molecular tools in the last 2 years",
-    headerName="Training in TB tools received",
+    "Pct_hrCap_buildg",
+    headerName="%age of labs whose staff receive targeted capacity-building",
     wrapHeaderText=True,
     autoHeaderHeight=True,
-    cellStyle={
-        'fontSize': '8px',     
-        'lineHeight': '13px'  
-    }
+    headerClass="small-header"
 )
+
+gb.configure_column(
+    "Pct_TB_Cap_Buildg",
+    headerName="%age of labs whose staff received TB molecular training in last 2 Yrs",
+    wrapHeaderText=True,
+    autoHeaderHeight=True,
+    headerClass="small-header"
+)
+
 
 
 # Configure default column behavior
@@ -690,131 +730,6 @@ st.download_button(
 
 
 
-# %% Overall cadres available
-
-st.markdown(
-    """
-    <h2 style='font-size: 14px; font-family: sans-serif; font-weight: bold;'>
-        HR Detailed Table
-    </h2>
-    """, 
-    unsafe_allow_html=True
-)
-
-
-gb = GridOptionsBuilder().from_dataframe(filter_CadreAvaill)
-
-# Enable filtering
-gb.configure_default_column(filter = True, sortable=True)
-
-# Freeze 1st column
-gb.configure_column("List of cadre categories unavailable in the facility", pinned="left")
-
-# Wrap long column headers properly
-gb.configure_column(
-    "List of cadre categories unavailable in the facility",
-    headerName="List of cadre categories unavailable in the facility",
-    wrapHeaderText=True,
-    autoHeaderHeight=True
-)
-
-# -----------------------------
-# Conditional Coloring 
-# -----------------------------
-cellstyle_jscode1 = JsCode("""
-function(params) {
-    if (params.value === null || params.value === undefined) return {};
-
-    let valueStr = params.value.toString().trim();
-
-    if (valueStr === "" || valueStr.toLowerCase() === "nan") return {};
-
-    // Extract number (e.g. 33 from "33% (1/3)")
-    let match = valueStr.match(/\\d+/);
-    if (!match) return {};
-
-    let val = parseInt(match[0]);
-
-    if (val >= 80) {
-        return {backgroundColor: '#dc3545', color: 'white'};
-    } else if (val >= 50) {
-        return {backgroundColor: '#ffc107', color: 'black'};
-    } else {
-        return {backgroundColor: '#28a745', color: 'white'};
-    }
-}
-""")       
-
-# Columns to color
-target_cols = ["HC III", "HC IV", "HOSPITAL", "RRH"]
-
-for col in target_cols:
-    if col in filter_CadreAvaill.columns:
-        gb.configure_column(col, cellStyle=cellstyle_jscode1)
-
-# Configure default column behavior
-gb.configure_default_column(
-    wrapText=True,              # Enable text wrapping
-    autoHeight=False,            # Adjust row height to fit wrapped text
-    cellStyle={
-        'font-size': '12px',
-        'line-height': '8px',  # Forces lines closer together (try 1.0 or 1.2 as well)
-        'display': 'flex',
-        'align-items': 'center',
-        'padding-top': '0px',   # Optional: reduces space at the top of the cell
-        'padding-bottom': '0px', # Optional: reduces space at the bottom of the cell
-        'margin-bottom': '0px'
-          } 
-)
-
-gb.configure_grid_options(domLayout='autoHeight') 
-grid_options = gb.build()
-
-# changing font size in the row formated rows
-custom_css = {
-    # Data cells
-    ".ag-cell": {
-        "font-size": "10px !important",
-        "line-height": "12px !important",
-        "padding-top": "0px !important",
-        "padding-bottom": "0px !important"
-    },
-
-    # Headers for columns with headerClass="small-header"
-    ".small-header .ag-header-cell-text": {
-        "font-size": "10px !important",
-        "line-height": "12px !important",
-        "font-weight": "bold"
-    }
-}
-
-# Display the grid and capture the response
-grid_response = AgGrid(
-    filter_CadreAvaill,
-    gridOptions=grid_options,
-    custom_css=custom_css,
-     # for downloading
-    data_return_mode="FILTERED_AND_SORTED", 
-    update_mode=GridUpdateMode.MODEL_CHANGED,
-    fit_columns_on_grid_load=True,
-    theme='alpine',
-    rowHeight=10,
-    height=400,
-    allow_unsafe_jscode=True 
-)
-
-# Add the Download Button
-# Extract the data currently shown in the grid (post-filter/sort)
-df_to_download = grid_response['data']
-
-st.download_button(
-    label="📥 Download Table",
-    data=df_to_download.to_csv(index=False).encode('utf-8'),
-    file_name='hr_cdreLvl.csv',
-    mime='text/csv'
-)
-
-
 
 # %% Gaps
 st.markdown(
@@ -834,7 +749,7 @@ gb.configure_default_column(filter = True, sortable=True, resizable=True, suppre
 
 # Freeze key columns
 gb.configure_column(
-    "RRH",
+    "RRH_Region",
     pinned="left",
     width=120
 )
@@ -936,7 +851,7 @@ gb.configure_default_column(filter = True, sortable=True, resizable=True, suppre
 
 # Freeze key columns
 gb.configure_column(
-    "RRH",
+    "RRH_Region",
     pinned="left",
     width=120
 )
