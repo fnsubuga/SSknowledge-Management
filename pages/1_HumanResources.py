@@ -560,7 +560,6 @@ st.download_button(
 
 
 # %% Detailed HR
-
 st.markdown(
     """
     <h2 style='font-size: 14px; font-family: sans-serif; font-weight: bold;'>
@@ -633,40 +632,6 @@ target_cols = ["The facility possesses all the required cadre categories (See at
 for col in target_cols:
     if col in filter_HRdetail.columns:
         gb.configure_column(col, cellStyle=cellstyle_jscode3)
-
-# Wrap long column headers properly
-# wrap and rename
-gb.configure_column(
-    "Pct_hrinPlace",
-    headerName="%age of labs that possess all the required cadre categories",
-    wrapHeaderText=True,
-    autoHeaderHeight=True,
-    headerClass="small-header"
-)
-
-gb.configure_column(
-    "Pct_InadequatehrinPlace",
-    headerName="% of labs with required cadres, but, in inadequate numbers in the health facility",
-    wrapHeaderText=True,
-    autoHeaderHeight=True,
-    headerClass="small-header"
-)
-
-gb.configure_column(
-    "Pct_hrCap_buildg",
-    headerName="%age of labs whose staff receive targeted capacity-building",
-    wrapHeaderText=True,
-    autoHeaderHeight=True,
-    headerClass="small-header"
-)
-
-gb.configure_column(
-    "Pct_TB_Cap_Buildg",
-    headerName="%age of labs whose staff received TB molecular training in last 2 Yrs",
-    wrapHeaderText=True,
-    autoHeaderHeight=True,
-    headerClass="small-header"
-)
 
 
 
