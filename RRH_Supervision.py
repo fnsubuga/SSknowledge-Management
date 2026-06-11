@@ -10,8 +10,8 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import plotly.express as px
-from st_aggrid import AgGrid, GridOptionsBuilder
-
+from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode
+from pathlib import Path
 
 
 # -----------------------------------------------------
@@ -66,16 +66,45 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 # %% Load data 
 
 # Total sites visited
-file_path = "Data/visit/TotalSites_Visited.xls"
+file_path = Path("Data") / "visit" / "TotalSites_Visited.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path.exists():
+    file_path = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\visit\TotalSites_Visited.xls"
+    )
 TlVisit  =  pd.read_excel(file_path)
 
 # Total sites visited, and by RRH
-file_path1 = "Data/visit/RRH_SitesVisited_level.xls"
+file_path1 = Path("Data") / "visit" / "RRH_SitesVisited_level.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path1.exists():
+    file_path1 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\visit\RRH_SitesVisited_level.xls"
+    )
 visits  = pd.read_excel(file_path1)
 
 # Line list of visited facilities
-file_path3 = "Data/visit/Linelist_sitesVisited.xls"
+file_path3 = Path("Data") / "visit" / "Linelist_sitesVisited.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path3.exists():
+    file_path3 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\Data\visit\Linelist_sitesVisited.xls"
+    )
 Fac_linelist  = pd.read_excel(file_path3)
+
+
+# All KPIs
+file_path32323 = Path("Data") / "KPI_Summary.xls"
+
+# Fallback to local path when running in Spyder
+if not file_path32323.exists():
+    file_path32323 = Path(
+        r"D:\Python\dashboard\dashboard\SupportSupervisionRpt\dash_SSupervision\KPI_Summary.xls"
+    )
+allKPIs  = pd.read_excel(file_path32323)
 
 # KPI summary table
 #file_path4 = "Data/visit/Jan_March/KPI_Summary.xls"
@@ -136,6 +165,7 @@ tables = {
     "Total_Visits": TlVisit,
     "RRH_visits": visits,
     "RRH_linelist":  Fac_linelist,
+    "All_kpiSummary"  : allKPIs
     #"kpi_sumry":    KPIs,
     #"RRH_Vslvl":    VLevel 
     
@@ -151,6 +181,7 @@ filtered_tables = {
 filter_Total_Visits = filtered_tables["Total_Visits"]
 filter_RRH_visits = filtered_tables["RRH_visits"]
 filter_Fac_linelist = filtered_tables["RRH_linelist"]
+filter_All_kpiSummary = filtered_tables["All_kpiSummary"]
 #filter_kpi_sumry = filtered_tables["kpi_sumry"]
 #filter_RRH_Vslvl = filtered_tables["RRH_Vslvl"]
 
@@ -248,13 +279,14 @@ grid_response = AgGrid(
 
 # Add the Download Button
 # Extract the data currently shown in the grid (post-filter/sort)
-df_to_download = grid_response['data']
+if grid_response and 'data' in grid_response:
+    df_to_download = pd.DataFrame(grid_response['data'])
 
-st.download_button(
+result = st.download_button(
     label="📥 Download Table",
-    data=df_to_download.to_csv(index=False).encode('utf-8'),
-    file_name='rrh_sites1.csv',
-    mime='text/csv'
+    data=df_to_download.to_csv(index=False).encode("utf-8"),
+    file_name="rrh_sitesVisited.csv",
+    mime="text/csv"
 )
 
 # %% Line list of health facilities visited
@@ -304,11 +336,129 @@ grid_response = AgGrid(
 
 # Add the Download Button
 # Extract the data currently shown in the grid (post-filter/sort)
+if grid_response and 'data' in grid_response:
+    df_to_download = pd.DataFrame(grid_response['data'])
+
+result = st.download_button(
+    label="📥 Download Table",
+    data=df_to_download.to_csv(index=False).encode("utf-8"),
+    file_name="list_sitesVisited.csv",
+    mime="text/csv"
+)
+
+
+
+# %% All KPIS
+st.markdown(
+    """
+    <h2 style='font-size: 14px; font-family: sans-serif; font-weight: bold;'>
+        All KPIs - A summary
+    </h2>
+    """, 
+    unsafe_allow_html=True
+)
+
+gb = GridOptionsBuilder().from_dataframe(filter_All_kpiSummary)
+
+# Enable filtering
+gb.configure_default_column(filter = True, sortable=True)
+
+# Freeze RRH column
+gb.configure_column("Lab Section", pinned="left")
+
+gb.configure_column("Yr", width=70)
+gb.configure_column("Qtr", width=90)
+gb.configure_column("Status", width=140)
+
+gb.configure_column(
+    "Indicator",
+    width=450,
+    wrapText=True,
+    autoHeight=True
+)
+
+# -----------------------------
+# Conditional Coloring 
+# -----------------------------
+cellstyle_jscode2 = JsCode("""
+function(params) {
+    if (params.value === null || params.value === undefined) return {};
+
+    let valueStr = params.value.toString().trim();
+
+    if (valueStr === "" || valueStr.toLowerCase() === "nan") return {};
+
+    // Extract number (e.g. 33 from "33% (1/3)")
+    let match = valueStr.match(/\\d+/);
+    if (!match) return {};
+
+    let val = parseInt(match[0]);
+
+    if (val >= 80) {
+        return {backgroundColor: '#28a745', color: 'white'};
+    } else if (val >= 50) {
+        return {backgroundColor: '#ffc107', color: 'black'};
+    } else {
+        return {backgroundColor: '#dc3545', color: 'white'};
+    }
+}
+""")
+
+# Columns to color
+target_cols = ["Status" ]
+
+# apply the conditioning to the columns of interest
+for col in target_cols:
+    if col in filter_All_kpiSummary.columns:
+        gb.configure_column(col, cellStyle=cellstyle_jscode2)
+        
+
+# spacing in the table
+gb.configure_grid_options(
+   rowHeight=28,
+    headerHeight=40,
+    groupHeaderHeight=60) 
+
+grid_options = gb.build()
+
+# changing font size in the row formated rows
+custom_css = {
+    # Data cells
+    ".ag-cell": {
+        "font-size": "12px !important",
+        "line-height": "12px !important",
+        "padding-top": "0px !important",
+        "padding-bottom": "0px !important"
+    },
+
+    # Headers for columns with headerClass="small-header"
+    ".small-header .ag-header-cell-text": {
+        "font-size": "10px !important",
+        "line-height": "12px !important",
+        "font-weight": "bold"
+    }
+}
+
+# Display the grid and capture the response
+grid_response = AgGrid(
+    filter_All_kpiSummary,
+    gridOptions=grid_options,
+    custom_css=custom_css,
+    # for downloading
+    fit_columns_on_grid_load=False,
+    theme='alpine',
+    allow_unsafe_jscode=True
+)
+
+# Add the Download Button
+# Extract the data currently shown in the grid (post-filter/sort)
 df_to_download = grid_response['data']
 
 st.download_button(
     label="📥 Download Table",
     data=df_to_download.to_csv(index=False).encode('utf-8'),
-    file_name='sites_visited.csv',
+    file_name='all_kpis.csv',
     mime='text/csv'
 )
+
+
