@@ -27,7 +27,7 @@ st.title("Support Supervision Report")
 
 
 st.markdown("""
-            The suppport supervision report 
+            Section:  Suppport supervision summary  
     
             """
             )
@@ -647,7 +647,7 @@ fig.update_xaxes(
 
 fig.update_yaxes(
     title_font=dict(size=11),
-    tickfont=dict(size=9)
+    tickfont=dict(size=12)
 )
 
 
@@ -759,8 +759,8 @@ fig.update_xaxes(
 )
 
 fig.update_yaxes(
-    title_font=dict(size=11),
-    tickfont=dict(size=9)
+    title_font=dict(size=12),
+    tickfont=dict(size=12)
 )
 
 
@@ -878,8 +878,8 @@ fig.update_xaxes(
 )
 
 fig.update_yaxes(
-    title_font=dict(size=11),
-    tickfont=dict(size=9)
+    title_font=dict(size=12),
+    tickfont=dict(size=12)
 )
 
 
@@ -989,8 +989,8 @@ fig.update_xaxes(
 )
 
 fig.update_yaxes(
-    title_font=dict(size=11),
-    tickfont=dict(size=9)
+    title_font=dict(size=12),
+    tickfont=dict(size=12)
 )
 
 
@@ -1121,8 +1121,8 @@ fig.update_xaxes(
 )
 
 fig.update_yaxes(
-    title_font=dict(size=11),
-    tickfont=dict(size=9)
+    title_font=dict(size=12),
+    tickfont=dict(size=12)
 )
 
 
@@ -1240,8 +1240,8 @@ fig.update_xaxes(
 )
 
 fig.update_yaxes(
-    title_font=dict(size=11),
-    tickfont=dict(size=9)
+    title_font=dict(size=12),
+    tickfont=dict(size=12)
 )
 
 
@@ -1333,8 +1333,8 @@ fig = px.imshow(
 )
 
 fig.update_layout(
-    height=max(350, len(heatmap_df1.index) * 28),
-    font=dict(size=10),
+    height=max(500, len(heatmap_df1.index) * 28),
+    font=dict(size=12),
     margin=dict(
         l=10,
         r=10,
@@ -1354,8 +1354,8 @@ fig.update_xaxes(
 )
 
 fig.update_yaxes(
-    title_font=dict(size=11),
-    tickfont=dict(size=9)
+    title_font=dict(size=12),
+    tickfont=dict(size=12)
 )
 
 
@@ -1470,8 +1470,8 @@ fig.update_xaxes(
 )
 
 fig.update_yaxes(
-    title_font=dict(size=11),
-    tickfont=dict(size=9)
+    title_font=dict(size=12),
+    tickfont=dict(size=12)
 )
 
 
